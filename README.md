@@ -1,5 +1,7 @@
 # DataScienceApp - a software tool for usage in the Data Science lifecycle
 
+**Attention: code in refactoring phase**
+
 ## Requirements
 
 * Java 8
