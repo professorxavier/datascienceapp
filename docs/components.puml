@@ -1,0 +1,52 @@
+@startuml
+
+skinparam componentFontSize 11
+
+folder "Dataset Files" {
+  [Datasets]
+}
+
+package "DataScienceApplication" {
+  [DataScienceApp] -right- [OperationInvoker]
+  interface "OperationCommand" as OC
+  [OperationInvoker] -down- OC
+  [DatasetLoad] -up-> OC
+  [PreProcessing] -up-> OC
+  [PreAnalysis] -up-> OC
+  [Processing] -up-> OC
+  [Reporting] -left-> OC
+  [Processing] -down-[WekaAPI]
+  [DatasetLoad]-down-[R API]
+  [PreProcessing]-down-[R API]
+  [PreAnalysis]-down-[R API]
+  [PreProcessing]-down-[MongoDriver]
+  [PreAnalysis]-down-[MongoDriver]
+  [Processing]-down-[MongoDriver]
+  [Reporting]-down-[MongoDriver]
+  [DatasetLoad]-down-[MongoDriver]
+
+}
+
+folder "R Scripts" {
+  [Penman]
+  [Stats]
+}
+
+
+database "MongoDB" {
+  folder "datasciencedb" {
+    [stations]
+    [datasets]
+    [missingstats]
+	[results]
+  }
+}
+
+[DatasetLoad] -left- [Datasets]
+[MongoDriver] -down- [stations]
+[MongoDriver] -down- [datasets]
+[MongoDriver] -down- [missingstats]
+[MongoDriver] -down- [results]
+[R API] -down- [Penman]
+[R API] -down- [Stats]
+@enduml
